@@ -3,7 +3,7 @@ import GoalItem from './GoalItem';
 
 function GoalList({ goals, updateGoalProgress, deleteGoal }) {
   return (
-    <div>
+    <div className="space-y-4">
       {goals.map(goal => (
         <GoalItem
           key={goal.id}
