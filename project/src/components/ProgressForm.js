@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 function ProgressForm({ addGoal }) {
   const [goalName, setGoalName] = useState('');
   const [goalType, setGoalType] = useState('steps');
-  const [goalProgress, setGoalProgress] = useState(0);
+  const [goalProgress, setGoalProgress] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!goalName || goalProgress < 0) {
-      setError('Please provide a valid goal name and progress.');
+    if (!goalName || !goalProgress) {
+      setError('Veuillez remplir tous les champs requis');
       return;
     }
 
@@ -24,52 +24,92 @@ function ProgressForm({ addGoal }) {
     addGoal(newGoal);
     setGoalName('');
     setGoalType('steps');
-    setGoalProgress(0);
+    setGoalProgress('');
     setError('');
+    alert("Progression enregistrée avec succès!");
   };
 
   return (
-    <div className="progress-form">
-      <h2>Log Your Fitness Goal Progress</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="goalName">Goal Name:</label>
-          <input
-            type="text"
-            id="goalName"
-            value={goalName}
-            onChange={(e) => setGoalName(e.target.value)}
-            placeholder="e.g., Walk 10,000 steps"
-          />
-        </div>
+    <div className="flex items-center justify-center p-[6.7%] bg-slate-50">
+      <div className="progress-form bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Suivez Votre Progression Fitness
+        </h2>
 
-        <div>
-          <label htmlFor="goalType">Goal Type:</label>
-          <select
-            id="goalType"
-            value={goalType}
-            onChange={(e) => setGoalType(e.target.value)}
+        {error && (
+          <div className="text-red-500 mb-4">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-5">
+            <label
+              htmlFor="goalName"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Nom de l'Objectif:
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                id="goalName"
+                value={goalName}
+                onChange={(e) => setGoalName(e.target.value)}
+                placeholder="ex: Marcher 10 000 pas"
+                className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="mb-5">
+            <label
+              htmlFor="goalType"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Type d'Objectif:
+            </label>
+            <div className="relative">
+              <select
+                id="goalType"
+                value={goalType}
+                onChange={(e) => setGoalType(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-sm pr-8"
+              >
+                <option value="steps">Pas</option>
+                <option value="water">Eau (verres)</option>
+                <option value="workout">Entraînements</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label
+              htmlFor="goalProgress"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Progression:
+            </label>
+            <div className="relative">
+              <input
+                type="number"
+                id="goalProgress"
+                value={goalProgress}
+                onChange={(e) => setGoalProgress(e.target.value)}
+                placeholder="ex: 5000 pas"
+                className="w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-sm"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-3 px-4 rounded-button font-medium hover:bg-blue-100 transition-all whitespace-nowrap flex items-center justify-center"
           >
-            <option value="steps">Steps</option>
-            <option value="water">Water (cups)</option>
-            <option value="workout">Workouts</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="goalProgress">Progress:</label>
-          <input
-            type="number"
-            id="goalProgress"
-            value={goalProgress}
-            onChange={(e) => setGoalProgress(Number(e.target.value))}
-            placeholder="e.g., 5000 steps"
-          />
-        </div>
-
-        <button type="submit">Log Progress</button>
-      </form>
+            Enregistrer la Progression
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

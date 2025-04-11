@@ -40,12 +40,17 @@ function App() {
   };
 
   return (
+<div>
+<h1 class="text-5xl font-bold text-center text-gray-800 tracking-tight leading-tight border-b-4 border-blue-500 inline-block pb-2">
+  Fitness Goal Tracker
+</h1>
     <div className="App">
-      <h1>Fitness Goal Tracker</h1>
       <ProgressForm addGoal={addGoal} />
       <GoalList goals={goals} updateGoalProgress={updateGoalProgress} deleteGoal={deleteGoal} />
       <Summary goals={goals} />
     </div>
+</div>
+
   );
 }
 
